@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#100f17">
+<title>Storyforge RPG</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <button id="menuBtn" class="icon-btn" aria-label="Open character workshop">☰</button>
+    <div class="brand-icon">✦</div>
+    <div class="brand"><strong>STORYFORGE</strong><small>YOUR WORLD. YOUR RULES.</small></div>
+    <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙</button>
+  </header>
+  <nav class="tabs" aria-label="Main navigation">
+    <button class="tab active" data-view="story">✧ <span>Story RPG</span></button>
+    <button class="tab" data-view="characters">♙ <span>Characters</span></button>
+    <button class="tab" data-view="gallery">▧ <span>Story Images</span></button>
+  </nav>
+  <main>
+    <section id="view-story" class="view active">
+      <div class="hero"><div class="eyebrow">INTERACTIVE STORY ENGINE</div><h1>Step into<br><em>your story.</em></h1><p>Build your cast, shape the scene, and let the next chapter unfold.</p></div>
+      <div class="panel">
+        <div class="section-heading"><div><span class="eyebrow">01 / THE SETUP</span><h2>Set the scene</h2></div><button id="addCharacterShortcut" class="text-btn">＋ Character</button></div>
+        <label class="field-label" for="activeCharacter">Main character</label><select id="activeCharacter" class="input"></select>
+        <label class="field-label" for="scenario">Scenario / opening scene</label><textarea id="scenario" class="input" rows="3" placeholder="Where are we? What is happening when the story begins?"></textarea>
+        <label class="field-label" for="storyNotes">Story notes & world lore</label><textarea id="storyNotes" class="input" rows="3" placeholder="Continuity facts, relationships, secrets, boundaries, important events..."></textarea>
+        <div class="two-col">
+          <div><label class="field-label" for="tone">Writing style</label><select id="tone" class="input"><option>Immersive, descriptive</option><option>Natural dialogue</option><option>Cinematic</option><option>Dark and atmospheric</option><option>Funny and lively</option><option>Concise roleplay</option></select></div>
+          <div><label class="field-label" for="replyLength">Reply length</label><select id="replyLength" class="input"><option value="180">Short</option><option value="350" selected>Medium</option><option value="600">Long</option></select></div>
+        </div>
+        <button id="startStory" class="primary-btn">Start / continue story <span>→</span></button>
+        <div class="microcopy">Characters and stories save in this browser on this device.</div>
+      </div>
+      <div class="panel chat-panel">
+        <div class="section-heading"><div><span class="eyebrow">02 / THE SCENE</span><h2>Story thread</h2></div><div class="inline-actions"><button id="exportChat" class="small-btn">Export</button><button id="clearChat" class="small-btn danger">Clear</button></div></div>
+        <div id="chatLog" class="chat-log"><div class="empty-state"><div class="empty-star">✦</div><strong>Your story starts here.</strong><p>Choose a character and write the opening scene, then start the story.</p></div></div>
+        <form id="messageForm" class="composer"><textarea id="userMessage" rows="2" class="input composer-input" placeholder="What do you say or do next?"></textarea><div class="composer-bottom"><span id="statusText" class="status">Ready when you are</span><button id="sendMessage" class="send-btn" type="submit" aria-label="Send message">➤</button></div></form>
+        <div class="inline-actions below-actions"><button id="regenerate" class="small-btn">↻ Regenerate last reply</button><button id="editLast" class="small-btn">✎ Edit last message</button></div>
+      </div>
+    </section>
+    <section id="view-characters" class="view">
+      <div class="page-intro"><span class="eyebrow">CHARACTER WORKSHOP</span><h1>Bring them<br><em>to life.</em></h1><p>Write character cards with personality, backstory, voice, and example dialogue.</p></div>
+      <div class="panel">
+        <div class="section-heading"><div><span class="eyebrow">CHARACTER CARD</span><h2 id="characterFormTitle">New character</h2></div></div>
+        <input id="characterId" type="hidden">
+        <label class="field-label" for="charName">Name</label><input id="charName" class="input" placeholder="e.g. Daisy">
+        <label class="field-label" for="charTagline">Short description</label><input id="charTagline" class="input" placeholder="A sharp-witted artist with a guarded heart">
+        <label class="field-label" for="charPersonality">Personality & voice</label><textarea id="charPersonality" class="input" rows="3" placeholder="How do they think, speak, joke, react? What makes their voice distinctive?"></textarea>
+        <label class="field-label" for="charBackstory">Backstory</label><textarea id="charBackstory" class="input" rows="3" placeholder="History, relationships, motivations, fears, secrets..."></textarea>
+        <label class="field-label" for="charExample">Example dialogue</label><textarea id="charExample" class="input" rows="2" placeholder="A short line that captures how they speak."></textarea>
+        <label class="field-label" for="charImage">Portrait image URL (optional)</label><input id="charImage" class="input" placeholder="https://...">
+        <div class="two-col"><button id="saveCharacter" class="primary-btn">Save character</button><button id="resetCharacter" class="secondary-btn">New card</button></div>
+      </div>
+      <div class="character-grid" id="characterGrid"></div>
+    </section>
+    <section id="view-gallery" class="view">
+      <div class="page-intro"><span class="eyebrow">VISUAL STORYTELLING</span><h1>Picture the<br><em>moment.</em></h1><p>Create images from a story prompt and keep them alongside your scenes.</p></div>
+      <div class="panel">
+        <label class="field-label" for="imagePrompt">Image prompt</label><textarea id="imagePrompt" class="input" rows="4" placeholder="Describe the character, appearance, pose, clothing, setting, lighting, camera angle, and art style..."></textarea>
+        <label class="field-label" for="negativePrompt">Avoid (optional)</label><input id="negativePrompt" class="input" placeholder="blurry, low detail, extra fingers...">
+        <div class="two-col"><div><label class="field-label" for="imageStyle">Visual style</label><select id="imageStyle" class="input"><option value="">Let the prompt decide</option><option>photorealistic cinematic still</option><option>digital illustration</option><option>anime illustration</option><option>graphic novel</option><option>painterly fantasy art</option></select></div><div><label class="field-label" for="imageSize">Image size</label><select id="imageSize" class="input"><option value="512">512 × 512 (faster)</option><option value="640">640 × 640</option><option value="768">768 × 768 (slower)</option></select></div></div>
+        <button id="generateImage" class="primary-btn">Generate story image <span>✧</span></button>
+        <p class="microcopy">Free community workers may queue or be unavailable. Download images you want to keep.</p><div id="imageStatus" class="status image-status">Ready to create</div>
+      </div>
+      <div id="galleryGrid" class="gallery-grid"></div>
+    </section>
+    <section id="view-settings" class="view">
+      <div class="page-intro"><span class="eyebrow">PREFERENCES</span><h1>Your setup.</h1><p>Configure the free community AI connection and backup your story data.</p></div>
+      <div class="panel">
+        <h2>Text generation</h2><p class="muted">Uses AI Horde’s OpenAI-compatible community service. Anonymous requests are supported at the lowest priority. A free AI Horde key may improve queue priority.</p>
+        <label class="field-label" for="hordeKey">AI Horde API key (optional)</label><input id="hordeKey" class="input" placeholder="Leave blank for anonymous access">
+        <label class="field-label" for="textModel">Text model</label><select id="textModel" class="input"><option value="">Auto / available worker</option></select>
+        <button id="refreshModels" class="secondary-btn">Refresh available text models</button>
+        <hr><h2>Backup & privacy</h2><p class="muted">Characters, notes, chats, and gallery records are saved in this browser only. Clearing browser data can delete them. Export backups regularly.</p>
+        <button id="exportAll" class="secondary-btn">Export all story data (JSON)</button><button id="importAll" class="secondary-btn">Import story data (JSON)</button><input type="file" id="importFile" accept="application/json" hidden>
+        <hr><h2>About free generation</h2><p class="muted">The interface is yours. AI generation is supplied by volunteer computers, so no third-party service can guarantee unlimited or instant use. This build has no paid API configured, no subscription, and no paid credits.</p>
+      </div>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status"></div><footer>STORYFORGE RPG <span>•</span> A personal story workspace</footer>
+</div>
+<script src="app.js"></script>
+</body></html>
